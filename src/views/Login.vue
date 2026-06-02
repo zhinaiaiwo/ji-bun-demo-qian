@@ -28,22 +28,31 @@ const re2 = (rule, value, callback) => {
 }
 
 
+
 const rules = {
     username: [
         { required: true, message: '请输入用户名', trigger: 'blur' },
         { min: 5, max: 16, message: '长度必须在 5 - 16', trigger: 'blur' }
     ],
     password: [
+        { validator: re2, trigger: 'blur' },
         { required: true, message: '请输入密码', trigger: 'blur' },
         { min: 5, max: 16, message: '长度必须在 5 - 16', trigger: 'blur' }
     ],
     rePassword: [
-        { validator: re2, trigger: 'blur' }
+        { validator: re2, trigger: 'blur' },
+        { required: true, message: '请输入密码', trigger: 'blur' },
     ]
 }
 
 import { userRegisterService, userLoginService } from '@/api/user.js'
 const regist = async () => {
+
+    if (register.value.password !== register.value.rePassword){
+        ElMessage.error('两次输入密码不一致')
+        return
+    }
+
     let abc = await userRegisterService(register.value)
     /* if (abc.code === 0){
         alert(abc.message? abc.message : '注册成功')

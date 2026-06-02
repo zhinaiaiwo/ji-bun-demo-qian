@@ -3,22 +3,6 @@ import { reactive, ref } from 'vue'
 
 const ruleFormRef = ref()
 
-const checkAge = (rule, value, callback) => {
-    if (!value) {
-        return callback(new Error('Please input the age'))
-    }
-    setTimeout(() => {
-        if (!Number.isInteger(value)) {
-            callback(new Error('Please input digits'))
-        } else {
-            if (value < 18) {
-                callback(new Error('Age must be greater than 18'))
-            } else {
-                callback()
-            }
-        }
-    }, 1000)
-}
 
 const validatePass = (rule, value, callback) => {
     if (value === '') {
